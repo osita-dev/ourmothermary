@@ -18,8 +18,8 @@ export function Hero() {
         </p>
       </div>
      
-      <div className="flex h-40 w-60 shrink-0 items-center justify-center rounded-3xl">
-       <img src={OMPH} alt="Our Mother of Perpetual Help" className="h-40 w-40  rounded-3xl" />
+      <div className="flex shrink-0 items-center justify-center rounded-3xl">
+       <img src={OMPH} alt="Our Mother of Perpetual Help" className="h-40 w-100% rounded-3xl" />
        {/* <Heart className="h-14 w-14 text-primary" strokeWidth={1.5} /> */}
       </div>
     </div>
