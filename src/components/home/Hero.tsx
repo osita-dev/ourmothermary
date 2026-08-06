@@ -1,5 +1,6 @@
 import { Heart } from "lucide-react";
 import { getGreeting } from "@/lib/date-utils";
+import OMPH from "@/assets/OMPH.jpg"
 
 export function Hero() {
   const greeting = getGreeting();
@@ -16,14 +17,10 @@ export function Hero() {
           pray for us. <Heart className="inline h-4 w-4 text-accent" fill="currentColor" />
         </p>
       </div>
-
-      {/*
-        Artwork placeholder: swap for the real icon image, e.g.
-        <img src="/images/moph-hero.jpg" alt="Our Mother of Perpetual Help" />
-        Place the real asset at public/images/moph-hero.jpg
-      */}
-      <div className="flex h-40 w-32 shrink-0 items-center justify-center rounded-3xl bg-gradient-to-b from-primary/10 to-accent/20">
-        <Heart className="h-14 w-14 text-primary" strokeWidth={1.5} />
+     
+      <div className="flex h-40 w-60 shrink-0 items-center justify-center rounded-3xl">
+       <img src={OMPH} alt="Our Mother of Perpetual Help" className="h-40 w-40  rounded-3xl" />
+       {/* <Heart className="h-14 w-14 text-primary" strokeWidth={1.5} /> */}
       </div>
     </div>
   );
