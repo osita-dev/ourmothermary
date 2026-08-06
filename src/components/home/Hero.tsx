@@ -1,0 +1,30 @@
+import { Heart } from "lucide-react";
+import { getGreeting } from "@/lib/date-utils";
+
+export function Hero() {
+  const greeting = getGreeting();
+
+  return (
+    <div className="relative flex items-center gap-4 px-5 pt-6">
+      <div className="flex-1">
+        <p className="font-heading text-xl font-medium text-foreground">{greeting}</p>
+        <h1 className="font-heading text-4xl font-semibold text-foreground">Welcome!</h1>
+        <div className="my-2 h-1 w-14 rounded-full bg-accent" />
+        <p className="text-base text-muted-foreground">
+          Our Mother of Perpetual Help,
+          <br />
+          pray for us. <Heart className="inline h-4 w-4 text-accent" fill="currentColor" />
+        </p>
+      </div>
+
+      {/*
+        Artwork placeholder: swap for the real icon image, e.g.
+        <img src="/images/moph-hero.jpg" alt="Our Mother of Perpetual Help" />
+        Place the real asset at public/images/moph-hero.jpg
+      */}
+      <div className="flex h-40 w-32 shrink-0 items-center justify-center rounded-3xl bg-gradient-to-b from-primary/10 to-accent/20">
+        <Heart className="h-14 w-14 text-primary" strokeWidth={1.5} />
+      </div>
+    </div>
+  );
+}

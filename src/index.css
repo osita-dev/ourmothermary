@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    /* ===== Core surface & text ===== */
+    --background: 43 56% 91%;          /* #F5EEDC ivory/cream page bg */
+    --foreground: 150 45% 20%;         /* #1C4A33 deep green text */
+
+    --card: 42 76% 97%;                /* #FDF9F0 soft cream card bg */
+    --card-foreground: 150 45% 20%;
+
+    --popover: 42 76% 97%;
+    --popover-foreground: 150 45% 20%;
+
+    /* ===== Brand: deep forest green ===== */
+    --primary: 152 46% 19%;            /* #1A4732 */
+    --primary-foreground: 42 76% 97%;  /* cream text on green */
+    --primary-light: 150 43% 25%;      /* #245A3F lighter green for gradients/hover */
+
+    /* ===== Brand: gold / mustard accent ===== */
+    --accent: 38 62% 56%;              /* #D4A24A gold */
+    --accent-foreground: 152 46% 19%;
+    --accent-dark: 43 55% 49%;         /* #C39C39 deeper gold for text on light bg */
+
+    --secondary: 44 42% 88%;           /* #EDE6D3 muted sand, secondary surfaces */
+    --secondary-foreground: 150 45% 20%;
+
+    --muted: 44 42% 88%;
+    --muted-foreground: 38 11% 38%;    /* #6B6355 secondary/body text */
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 43 36% 83%;              /* #E3DAC3 */
+    --input: 43 36% 83%;
+    --ring: 38 62% 56%;
+
+    --radius: 1.25rem;                 /* generous rounded corners like the design */
+
+    /* ===== Devotion card pastel identities ===== */
+    --card-sage: 56 35% 91%;           /* Weekly Novena */
+    --card-gold: 39 90% 88%;           /* St. Alphonsus */
+    --card-lavender: 314 29% 91%;      /* St. Gerard */
+    --card-coral: 19 81% 92%;          /* Consecration Preparation */
+    --card-blue: 213 30% 93%;          /* Feast Days & Events */
+    --card-peach: 32 86% 92%;          /* Yearly Programs */
+    --card-mint: 98 24% 91%;           /* Retreats */
+    --card-olive: 58 45% 89%;          /* Prayer Collection */
+
+    --gradient-hero: linear-gradient(135deg, hsl(43 56% 93%) 0%, hsl(43 60% 90%) 50%, hsl(40 55% 88%) 100%);
+    --shadow-soft: 0 4px 24px -4px hsl(150 45% 20% / 0.08);
+    --shadow-card: 0 1px 12px -2px hsl(150 45% 20% / 0.06);
+
+    --sidebar-background: 42 76% 97%;
+    --sidebar-foreground: 150 45% 20%;
+    --sidebar-primary: 152 46% 19%;
+    --sidebar-primary-foreground: 42 76% 97%;
+    --sidebar-accent: 44 42% 88%;
+    --sidebar-accent-foreground: 150 45% 20%;
+    --sidebar-border: 43 36% 83%;
+    --sidebar-ring: 38 62% 56%;
+  }
+
+  .dark {
+    --background: 230 20% 8%;
+    --foreground: 220 20% 92%;
+    --card: 230 18% 12%;
+    --card-foreground: 220 20% 92%;
+    --popover: 230 18% 12%;
+    --popover-foreground: 220 20% 92%;
+    --primary: 340 65% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 230 15% 16%;
+    --secondary-foreground: 220 20% 92%;
+    --muted: 230 12% 18%;
+    --muted-foreground: 220 10% 55%;
+    --accent: 260 20% 18%;
+    --accent-foreground: 220 20% 92%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 230 12% 20%;
+    --input: 230 12% 20%;
+    --ring: 340 65% 60%;
+    --gradient-hero: linear-gradient(135deg, hsl(230 20% 8%) 0%, hsl(330 15% 12%) 50%, hsl(260 15% 12%) 100%);
+    --shadow-soft: 0 4px 24px -4px hsl(0 0% 0% / 0.3);
+    --shadow-card: 0 1px 12px -2px hsl(0 0% 0% / 0.2);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Nunito', system-ui, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6,
+  .font-heading {
+    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px hsl(340 65% 60% / 0.6)) drop-shadow(0 0 20px hsl(340 65% 60% / 0.3));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 16px hsl(340 65% 60% / 0.8)) drop-shadow(0 0 40px hsl(340 65% 60% / 0.5));
+    transform: scale(1.1);
+  }
+}
+
+.glow-heart {
+  display: inline-block;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: hsl(var(--primary)); }
+}
+
+.typing-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid hsl(var(--primary));
+  width: 0;
+  animation:
+    typing-loop 7s steps(26, end) infinite,
+    blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing-loop {
+  0% { width: 0; }
+  28% { width: 100%; }    /* typed by ~2s */
+  86% { width: 100%; }    /* hold until ~6s */
+  100% { width: 0; }      /* reset */
+}

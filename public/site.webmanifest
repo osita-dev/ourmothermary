@@ -1,0 +1,13 @@
+{
+  "name": "Our Mother of Perpetual Help",
+  "short_name": "MOPH",
+  "description": "A digital prayer companion for Our Mother of Perpetual Help — novenas, feast days, and daily devotions in one guided, orderly flow.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5EEDC",
+  "theme_color": "#1A4732",
+  "orientation": "portrait",
+  "categories": ["lifestyle", "education"],
+  "lang": "en"
+}
