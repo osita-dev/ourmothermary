@@ -11,8 +11,10 @@ import {
   Wind,
   Star,
   CheckCircle2,
+  RefreshCw,
 } from "lucide-react";
 import type { Session } from "@/types";
+import { monthlyNovenaDays } from "./monthly-novena";
 
 export const sessions: Session[] = [
   {
@@ -38,6 +40,20 @@ export const sessions: Session[] = [
       { type: "prayer", stepNumber: 11, title_en: "Closing Hymn", prayerId: "hail-holy-queen", icon: Music2 },
       { type: "prayer", stepNumber: 12, title_en: "Closing Sign of the Cross", prayerId: "sign-of-the-cross", icon: Sparkles },
     ],
+  },
+  {
+    id: "monthly-novena",
+    title_en: "Monthly Novena",
+    subtitle_en: "A 9-day devotion, renewed each month",
+    estimatedMinutes: 10,
+    focusTheme_en: "Renewal",
+    description_en:
+      "Nine days of reflection and prayer, with a new theme each month.",
+    colorToken: "mint",
+    icon: RefreshCw,
+    kind: "day-select",
+    steps: [],
+    days: monthlyNovenaDays,
   },
   {
     id: "st-alphonsus-novena",

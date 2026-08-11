@@ -2,19 +2,25 @@ import type { LucideIcon } from "lucide-react";
 
 export type Step =
   | {
-      type: "prayer";
-      stepNumber: number;
-      title_en: string;
-      prayerId: string;
-      icon: LucideIcon;
-    }
+    type: "prayer";
+    stepNumber: number;
+    title_en: string;
+    prayerId: string;
+    icon: LucideIcon;
+  }
   | {
-      type: "nested";
-      stepNumber: number;
-      title_en: string;
-      nestedFlowId: string;
-      icon: LucideIcon;
-    };
+    type: "nested";
+    stepNumber: number;
+    title_en: string;
+    nestedFlowId: string;
+    icon: LucideIcon;
+  };
+
+export interface NovenaDay {
+  dayNumber: number;
+  title_en: string;
+  body_en: string;
+}
 
 export type CardColorToken =
   | "sage"
@@ -35,5 +41,7 @@ export interface Session {
   description_en: string;
   colorToken: CardColorToken;
   icon: LucideIcon;
+  kind?: "linear" | "day-select"; 
   steps: Step[];
+  days?: NovenaDay[]; 
 }

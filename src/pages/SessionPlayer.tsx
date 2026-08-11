@@ -9,7 +9,7 @@ import { PrayerSection } from "@/components/session/PrayerSection";
 import { RosarySection } from "@/components/session/RosarySection";
 import { CompletionSection } from "@/components/session/CompletionSection";
 import { ScrollProgressBar } from "@/components/session/ScrollProgressBar";
-
+import { DayGridScreen } from "@/components/session/DayGridScreen";
 type Phase = "intro" | "flow";
 
 export default function SessionPlayer() {
@@ -112,7 +112,15 @@ export default function SessionPlayer() {
       </div>
     );
   }
-
+  if (session.kind === "day-select") {
+    return (
+      <DayGridScreen
+        session={session}
+        onBack={() => navigate(-1)}
+        onSelectDay={(day) => navigate(`/session/${session.id}/day/${day}`, { replace: true })}
+      />
+    );
+  }
   const handleStart = () => {
     startTimeRef.current = Date.now();
     setActiveIndex(0);

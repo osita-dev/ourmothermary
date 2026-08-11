@@ -12,6 +12,7 @@ import Devotions from "./pages/Devotions";
 import Notifications from "./pages/Notifications";
 import CalendarPage from "./pages/CalendarPage";
 import More from "./pages/More";
+import DayReadingPage from "./pages/DayReadingPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/session/:sessionId" element={<SessionPlayer />} />
+                <Route path="/session/:sessionId/day/:dayNumber" element={<DayReadingPage />} />
                 <Route path="/devotions" element={<Devotions />} />
                 <Route path="/notifications" element={<Notifications />} />
                 <Route path="/calendar" element={<CalendarPage />} />
