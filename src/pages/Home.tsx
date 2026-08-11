@@ -13,7 +13,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      <Header onMenuClick={() => setMenuOpen(true)} />
+    <div className="sticky top-0 z-20 bg-background/95 backdrop-blur">
+        <Header onMenuClick={() => setMenuOpen(true)} />
+      </div>
       <Hero />
       <TodayCard />
       <ProgressCard />
