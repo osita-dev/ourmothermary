@@ -1,10 +1,10 @@
-import { Home, BookOpen, Heart, CalendarDays, LayoutGrid } from "lucide-react";
+import { Home, BookOpen, Puzzle, CalendarDays, LayoutGrid } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 
 const tabs = [
   { to: "/", label: "Home", icon: Home, end: true },
   { to: "/devotions", label: "Devotions", icon: BookOpen, end: false },
-  { to: "/session/prayer-collection", label: "Prayers", icon: Heart, end: false },
+  { to: "/game", label: "Game", icon: Puzzle, end: false },
   { to: "/calendar", label: "Calendar", icon: CalendarDays, end: false },
   { to: "/more", label: "More", icon: LayoutGrid, end: false },
 ];
