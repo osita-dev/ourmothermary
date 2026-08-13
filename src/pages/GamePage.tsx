@@ -47,12 +47,6 @@ export default function GamePage() {
         }
     };
 
-    const handleNext = () => {
-        setPuzzleIndex((i) => (i + 1) % wordPuzzles.length);
-        setPath([]);
-        setStatus("playing");
-    };
-
     const handleShuffle = () => {
         setPath([]);
         setShuffleSeed((s) => s + 1);
