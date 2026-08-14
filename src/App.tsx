@@ -20,7 +20,7 @@ const Devotions = lazy(() => import("./pages/Devotions"));
 const Notifications = lazy(() => import("./pages/Notifications"));
 const CalendarPage = lazy(() => import("./pages/CalendarPage"));
 const More = lazy(() => import("./pages/More"));
-const GamePage = lazy(() => import("./pages/GamePage"));
+// const GamePage = lazy(() => import("./pages/GamePage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -53,7 +53,7 @@ const App = () => (
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/calendar" element={<CalendarPage />} />
                   <Route path="/more" element={<More />} />
-                  <Route path="/game" element={<GamePage />} />
+                  {/* <Route path="/game" element={<GamePage />} /> */}
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
