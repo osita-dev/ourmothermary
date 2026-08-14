@@ -4,13 +4,16 @@ export interface GameTile {
 }
 
 // Fisher–Yates shuffle — used fresh each time a puzzle loads.
-function shuffle<T>(arr: T[]): T[] {
+export function shuffle<T>(arr: T[]): T[] {
   const copy = [...arr];
   for (let i = copy.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy;
+}
+export function createShuffledOrder(length: number): number[] {
+  return shuffle(Array.from({ length }, (_, i) => i));
 }
 
 // Builds the shuffled tile pool for a puzzle: every letter of the answer

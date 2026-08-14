@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import type { PointerEvent } from "react";
 import type { GameTile } from "@/lib/game-utils";
+import { getTilePosition } from "@/lib/game-utils";
 import { LetterTile } from "./LetterTile";
 
 interface GameBoardProps {
@@ -47,8 +48,17 @@ export function GameBoard({ tiles, path, onPathChange, onRelease, disabled }: Ga
     if (!isDragging.current || disabled) return;
     const hit = hitTestTile(e.clientX, e.clientY);
     if (hit === null) return;
-    if (path[path.length - 1] === hit) return;
-    if (path.includes(hit)) return;
+
+    const existingIndex = path.lastIndexOf(hit);
+    if (existingIndex !== -1) {
+      // Dragged back onto a tile already in the path — pull back / undo
+      // everything selected after it, rather than locking the path in.
+      if (existingIndex === path.length - 1) return; // already the tip, no-op
+      onPathChange(path.slice(0, existingIndex + 1));
+      return;
+    }
+
+    // A brand new tile — extend the path forward.
     onPathChange([...path, hit]);
   };
 
@@ -58,9 +68,21 @@ export function GameBoard({ tiles, path, onPathChange, onRelease, disabled }: Ga
     onRelease();
   };
 
+  // The connecting "rope" — a point per selected tile, in selection order,
+  // using the exact same position math the tiles themselves are placed with.
+  const linePoints = path
+    .map((tileId) => {
+      const index = tiles.findIndex((t) => t.tileId === tileId);
+      if (index === -1) return null;
+      const { x, y } = getTilePosition(index, tiles.length);
+      return `${x},${y}`;
+    })
+    .filter((p): p is string => p !== null)
+    .join(" ");
+
   return (
     <div
-      className="relative mx-auto h-64 w-full max-w-xs touch-none"
+      className="relative mx-auto h-64 w-80 touch-none"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -78,6 +100,23 @@ export function GameBoard({ tiles, path, onPathChange, onRelease, disabled }: Ga
           selected={path.includes(tile.tileId)}
         />
       ))}
+
+      {/* Rendered last so it paints above the tiles, not hidden beneath them. */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        viewBox="-160 -128 320 256"
+      >
+        {path.length > 1 && (
+          <polyline
+            points={linePoints}
+            fill="none"
+            stroke="hsl(var(--accent))"
+            strokeWidth={8}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        )}
+      </svg>
     </div>
   );
 }

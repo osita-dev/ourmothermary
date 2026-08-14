@@ -1,3 +1,4 @@
+import { Sparkles } from "lucide-react";
 import type { WordPuzzle } from "@/types/game";
 import { BlankRow } from "./BlankRow";
 
@@ -8,6 +9,20 @@ interface SentenceCardProps {
 }
 
 export function SentenceCard({ puzzle, currentLetters, status }: SentenceCardProps) {
+  if (status === "correct") {
+    return (
+      <div className="mx-5 rounded-3xl bg-primary p-6 text-center shadow-card">
+        <Sparkles className="mx-auto h-6 w-6 text-accent" />
+        <p className="mt-2 font-heading text-xl font-semibold text-primary-foreground">
+          Correct!
+        </p>
+        {puzzle.fact && (
+          <p className="mt-2 text-sm leading-relaxed text-primary-foreground/80">{puzzle.fact}</p>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="mx-5 rounded-3xl bg-primary p-6 text-center shadow-card">
       <p className="font-heading text-xl font-medium leading-relaxed text-primary-foreground">

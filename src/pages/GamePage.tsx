@@ -1,22 +1,71 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Lightbulb, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowLeft, Lightbulb, RotateCcw } from "lucide-react";
 import { wordPuzzles } from "@/data/word-puzzles";
-import { buildTilePool } from "@/lib/game-utils";
+import { buildTilePool, createShuffledOrder } from "@/lib/game-utils";
 import { SentenceCard } from "@/components/game/SentenceCard";
 import { GameBoard } from "@/components/game/GameBoard";
+
+
+const GAME_STATE_KEY = "moph.game.state";
+
+interface StoredGameState {
+    order: number[];
+    orderPos: number;
+    solvedCount: number;
+}
+
+// Resumes an in-progress session exactly as it was left. Only generates a
+// fresh random order when there's genuinely nothing saved yet (first visit,
+// or storage was cleared) — a reload of an active session must not reshuffle.
+function loadGameState(totalPuzzles: number): StoredGameState {
+    try {
+        const raw = localStorage.getItem(GAME_STATE_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw) as StoredGameState;
+            if (Array.isArray(parsed.order) && parsed.order.length === totalPuzzles) {
+                return parsed;
+            }
+        }
+    } catch {
+        // fall through to a fresh session
+    }
+    return { order: createShuffledOrder(totalPuzzles), orderPos: 0, solvedCount: 0 };
+}
+
+function saveGameState(state: StoredGameState) {
+    try {
+        localStorage.setItem(GAME_STATE_KEY, JSON.stringify(state));
+    } catch {
+        // ignore
+    }
+}
 
 type Status = "playing" | "correct" | "wrong";
 
 export default function GamePage() {
     const navigate = useNavigate();
-    const [puzzleIndex, setPuzzleIndex] = useState(0);
+
+    const [gameState, setGameState] = useState(() => loadGameState(wordPuzzles.length));
+    const { order, orderPos, solvedCount } = gameState;
+
     const [path, setPath] = useState<number[]>([]);
     const [status, setStatus] = useState<Status>("playing");
-    const [solvedCount, setSolvedCount] = useState(0);
+
+
     const [shuffleSeed, setShuffleSeed] = useState(0);
 
-    const puzzle = wordPuzzles[puzzleIndex];
+    const puzzle = wordPuzzles[order[orderPos]];
+
+    // When a full random pass finishes, generate a fresh random order for
+    // the next round rather than repeating the same path.
+    const advanceToNextPuzzle = () => {
+        setGameState((prev) =>
+            prev.orderPos + 1 >= prev.order.length
+                ? { ...prev, order: createShuffledOrder(wordPuzzles.length), orderPos: 0 }
+                : { ...prev, orderPos: prev.orderPos + 1 }
+        );
+    };
 
     const tiles = useMemo(
         () => buildTilePool(puzzle.answer, puzzle.distractorLetters),
@@ -37,7 +86,7 @@ export default function GamePage() {
         if (attempt.length === 0) return;
         if (attempt === puzzle.answer) {
             setStatus("correct");
-            setSolvedCount((c) => c + 1);
+            setGameState((prev) => ({ ...prev, solvedCount: prev.solvedCount + 1 }));
         } else {
             setStatus("wrong");
             setTimeout(() => {
@@ -65,16 +114,21 @@ export default function GamePage() {
         }
     };
 
+    useEffect(() => {
+        saveGameState(gameState);
+    }, [gameState]);
+
     // Once correct, give a moment to read the fact, then move on automatically
     // — no tap required. Cleared if the puzzle changes again before it fires.
     useEffect(() => {
         if (status !== "correct") return;
         const timer = setTimeout(() => {
-            setPuzzleIndex((i) => (i + 1) % wordPuzzles.length);
+            advanceToNextPuzzle();
             setPath([]);
             setStatus("playing");
         }, 2200);
         return () => clearTimeout(timer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
     return (
@@ -128,16 +182,6 @@ export default function GamePage() {
                 </button>
             </div>
 
-            {status === "correct" && (
-                <div className="mx-5 mt-8 rounded-3xl bg-secondary/70 p-5 text-center">
-                    <Sparkles className="mx-auto h-6 w-6 text-accent" />
-                    <p className="mt-2 font-heading text-lg font-semibold text-foreground">Correct!</p>
-                    {puzzle.fact && (
-                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{puzzle.fact}</p>
-                    )}
-                    
-                </div>
-            )}
         </div>
     );
 }
